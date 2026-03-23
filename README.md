@@ -24,8 +24,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8010
 Usa estos comandos en un servicio Python tipo Render:
 
 - Build command: `pip install -r requirements.txt`
-- Pre-deploy command: `alembic upgrade head`
-- Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- Start command: `sh -c 'alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT'`
 
 Antes de publicar, configura `SECRET_KEY`, `DATABASE_URL` y `FRONTEND_URLS` en el proveedor.
 
@@ -47,6 +46,11 @@ Despues del primer deploy, revisa estas variables en el servicio:
 - `FRONTEND_URLS`: cambia el valor local por la URL real de tu frontend cuando lo publiques.
 - `DATABASE_URL`: si tu base tambien esta en Render, conviene usar la URL interna de Postgres desde la pantalla `Info` de la base para menor latencia.
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_FROM`: si no configuras SMTP, el login con OTP no podra enviar correos.
+
+Nota para plan `free`:
+
+- Render no permite `preDeployCommand` en servicios gratis.
+- Por eso este repo ejecuta `alembic upgrade head` dentro del `startCommand`.
 
 Health check:
 
