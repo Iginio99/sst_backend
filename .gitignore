@@ -33,6 +33,7 @@ env/
 
 # Pyenv
 .python-version
+!.python-version
 
 # PyInstaller
 *.manifest
