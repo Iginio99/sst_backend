@@ -6,6 +6,7 @@ API FastAPI para autenticacion, capacitaciones, checklists y chat.
 
 Copia `.env.example` a `.env` y ajusta al menos:
 
+- `APP_ENV`
 - `SECRET_KEY`
 - `DATABASE_URL`
 - `FRONTEND_URLS`
@@ -28,7 +29,7 @@ Usa estos comandos en un servicio Python tipo Render:
 
 Antes de publicar, configura `SECRET_KEY`, `DATABASE_URL` y `FRONTEND_URLS` en el proveedor.
 
-## Render
+## Render / UAT
 
 El repo ya incluye `render.yaml` y `.python-version`.
 
@@ -36,11 +37,15 @@ Con eso puedes desplegarlo como Blueprint:
 
 1. En Render, entra a `New > Blueprint`.
 2. Conecta `https://github.com/Iginio99/sst_backend`.
-3. Render detectara `render.yaml` y creara un Web Service `sst-backend` y una base Postgres `sst-db`.
+3. Render detectara `render.yaml` y creara un Web Service `sst-backend-uat`.
+4. Durante la creacion, pega tu `DATABASE_URL` de UAT en el campo solicitado.
 
 Despues del primer deploy, revisa estas variables en el servicio:
 
+- `APP_ENV`: debe quedar en `uat`.
+- `DISABLE_2FA`: queda en `true` para no exigir OTP por ahora.
 - `FRONTEND_URLS`: cambia el valor local por la URL real de tu frontend cuando lo publiques.
+- `DATABASE_URL`: si tu base tambien esta en Render, conviene usar la URL interna de Postgres desde la pantalla `Info` de la base para menor latencia.
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_FROM`: si no configuras SMTP, el login con OTP no podra enviar correos.
 
 Health check:

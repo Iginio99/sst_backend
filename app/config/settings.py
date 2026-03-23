@@ -8,9 +8,11 @@ class Settings(BaseSettings):
         case_sensitive=True,
     )
 
+    APP_ENV: str = "development"
     APP_NAME: str = "SST Backend"
     SECRET_KEY: str = "change-me"
     DATABASE_URL: str = "postgresql+psycopg2://sst_user:sstpass123@localhost:5433/sstdb"
+    DISABLE_2FA: bool = False
     FRONTEND_URLS: str = "http://localhost:3000,http://127.0.0.1:3000,http://localhost:8080,http://127.0.0.1:8080"
     LOCAL_ORIGIN_REGEX: str = r"https?://(localhost|127\.0\.0\.1)(:\d+)?$"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30

@@ -1,29 +1,25 @@
-databases:
-  - name: sst-db
-    plan: free
-    databaseName: sstdb
-    user: sst_user
-
 services:
   - type: web
-    name: sst-backend
+    name: sst-backend-uat
     runtime: python
     plan: free
-    region: virginia
+    region: oregon
     autoDeployTrigger: commit
     buildCommand: pip install -r requirements.txt
     preDeployCommand: alembic upgrade head
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
+      - key: APP_ENV
+        value: uat
       - key: APP_NAME
-        value: SST Backend
+        value: SST Backend UAT
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        fromDatabase:
-          name: sst-db
-          property: connectionString
+        sync: false
+      - key: DISABLE_2FA
+        value: "true"
       - key: FRONTEND_URLS
         value: http://localhost:3000,http://127.0.0.1:3000
       - key: LOCAL_ORIGIN_REGEX
