@@ -18,6 +18,9 @@ if config.config_file_name is not None:
 
 # ---- Importar tu metadata (Base) ----
 from app.config.database import Base
+from app.config.settings import settings
+
+config.set_main_option("sqlalchemy.url", settings.DATABASE_URL.replace("%", "%%"))
 
 # Esto permite autogenerate detectar tus modelos
 target_metadata = Base.metadata

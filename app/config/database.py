@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 
-DATABASE_URL = "postgresql+psycopg2://sst_user:sstpass123@localhost:5433/sstdb"
+from app.config.settings import settings
 
-engine = create_engine(DATABASE_URL, echo=False)
+engine = create_engine(settings.DATABASE_URL, echo=False, pool_pre_ping=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

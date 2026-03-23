@@ -1,0 +1,9 @@
+alembic
+bcrypt
+email-validator
+fastapi
+pydantic-settings
+psycopg2-binary
+python-jose[cryptography]
+sqlalchemy
+uvicorn[standard]
