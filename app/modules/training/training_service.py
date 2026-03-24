@@ -349,7 +349,7 @@ class TrainingService:
 
     def _has_full_access(self, user: User) -> bool:
         role_codes = {r.code for r in user.roles}
-        return "superadmin" in role_codes or "leader" in role_codes
+        return "superadmin" in role_codes or "leader" in role_codes or "admin" in role_codes
 
     def _is_superadmin(self, user: User) -> bool:
         return any(r.code == "superadmin" for r in user.roles)
