@@ -63,7 +63,7 @@ class AuthService:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Usuario inactivo")
 
         # Si 2FA está desactivado, saltamos OTP para entornos de prueba.
-        if settings.DISABLE_2FA or not user.two_factor_enabled:
+        if settings.APP_ENV.lower() == "uat" or settings.DISABLE_2FA or not user.two_factor_enabled:
             return self._build_auth_response(user)
 
         otp, _raw_code = self._create_otp(user)
