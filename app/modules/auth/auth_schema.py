@@ -1,5 +1,5 @@
 from typing import List, Optional
-from pydantic import BaseModel, EmailStr, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class LoginRequest(BaseModel):
@@ -73,7 +73,7 @@ class AssignUserRolesRequest(BaseModel):
 
 class UserOut(BaseModel):
     id: int
-    email: EmailStr
+    email: str
     name: str
     roles: List[str]
     permissions: List[str]

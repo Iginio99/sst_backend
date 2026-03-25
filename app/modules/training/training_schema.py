@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, ConfigDict
 
 
 class ModuleOut(BaseModel):
@@ -109,7 +109,7 @@ class ModuleAssignmentRequest(BaseModel):
 class UserSummary(BaseModel):
     id: int
     name: str
-    email: EmailStr
+    email: str
     roles: List[str]
 
 
