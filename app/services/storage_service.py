@@ -54,6 +54,8 @@ class StorageService:
         if upload_file.content_type:
             extra_args["ContentType"] = upload_file.content_type
 
+        upload_file.file.seek(0, 2)
+        size = upload_file.file.tell()
         upload_file.file.seek(0)
         self._client.upload_fileobj(
             upload_file.file,
@@ -62,7 +64,6 @@ class StorageService:
             ExtraArgs=extra_args,
         )
 
-        size = upload_file.file.tell()
         public_url = self._build_public_url(key)
         return {
             "key": key,
