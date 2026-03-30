@@ -1,7 +1,9 @@
 alembic
 bcrypt
+boto3
 email-validator
 fastapi
+python-multipart
 pydantic-settings
 psycopg2-binary
 python-jose[cryptography]

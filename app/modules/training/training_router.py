@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, File, UploadFile
 from sqlalchemy.orm import Session
 
 from app.infrastructure.respository import get_db
@@ -6,6 +6,9 @@ from app.modules.auth.auth_service import require_permissions
 from app.modules.training.training_schema import (
     LessonCompletionRequest,
     LessonCompletionResponse,
+    LessonCreateRequest,
+    LessonUpdateRequest,
+    LessonOut,
     ModuleAssignmentOut,
     ModuleAssignmentRequest,
     ModuleCreateRequest,
@@ -62,6 +65,75 @@ def complete_lesson(
         quiz_completed=quiz_completed,
         progress=progress_value,
     )
+
+
+@router.post(
+    "/modules/{module_id}/lessons",
+    response_model=LessonOut,
+)
+def create_lesson(
+    module_id: int,
+    payload: LessonCreateRequest,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_permissions(["training.manage"])),
+):
+    service = TrainingService(db)
+    return service.create_lesson(module_id, payload, current_user)
+
+
+@router.put(
+    "/lessons/{lesson_id}",
+    response_model=LessonOut,
+)
+def update_lesson(
+    lesson_id: int,
+    payload: LessonUpdateRequest,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_permissions(["training.manage"])),
+):
+    service = TrainingService(db)
+    return service.update_lesson(lesson_id, payload, current_user)
+
+
+@router.delete(
+    "/lessons/{lesson_id}",
+    status_code=204,
+)
+def delete_lesson(
+    lesson_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(require_permissions(["training.manage"])),
+):
+    service = TrainingService(db)
+    service.delete_lesson(lesson_id, current_user)
+
+
+@router.post(
+    "/lessons/{lesson_id}/cover",
+    response_model=LessonOut,
+)
+def upload_lesson_cover(
+    lesson_id: int,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    current_user=Depends(require_permissions(["training.manage"])),
+):
+    service = TrainingService(db)
+    return service.upload_lesson_cover(lesson_id, file, current_user)
+
+
+@router.post(
+    "/lessons/{lesson_id}/content",
+    response_model=LessonOut,
+)
+def upload_lesson_content(
+    lesson_id: int,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    current_user=Depends(require_permissions(["training.manage"])),
+):
+    service = TrainingService(db)
+    return service.upload_lesson_content(lesson_id, file, current_user)
 
 
 @router.get("/modules/{module_id}/quiz", response_model=QuizOut)

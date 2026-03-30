@@ -23,3 +23,23 @@ services:
         value: http://localhost:3000,http://127.0.0.1:3000
       - key: LOCAL_ORIGIN_REGEX
         value: https?://(localhost|127\.0\.0\.1)(:\d+)?$
+      - key: STORAGE_PROVIDER
+        sync: false
+      - key: SUPABASE_PROJECT_ID
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        sync: false
+      - key: SUPABASE_S3_ENDPOINT
+        sync: false
+      - key: SUPABASE_S3_DIRECT_HOST
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: MAX_IMAGE_UPLOAD_MB
+        value: "5"
+      - key: MAX_DOCUMENT_UPLOAD_MB
+        value: "20"
+      - key: MAX_VIDEO_UPLOAD_MB
+        value: "200"

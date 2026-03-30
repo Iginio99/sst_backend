@@ -23,6 +23,16 @@ class Settings(BaseSettings):
     SMTP_USERNAME: str | None = None
     SMTP_PASSWORD: str | None = None
     SMTP_FROM: str = "no-reply@sst.local"
+    STORAGE_PROVIDER: str | None = None
+    SUPABASE_PROJECT_ID: str | None = None
+    SUPABASE_STORAGE_BUCKET: str | None = None
+    SUPABASE_S3_ENDPOINT: str | None = None
+    SUPABASE_S3_DIRECT_HOST: str | None = None
+    AWS_ACCESS_KEY_ID: str | None = None
+    AWS_SECRET_ACCESS_KEY: str | None = None
+    MAX_IMAGE_UPLOAD_MB: int = 5
+    MAX_DOCUMENT_UPLOAD_MB: int = 20
+    MAX_VIDEO_UPLOAD_MB: int = 200
 
     @property
     def cors_origins(self) -> list[str]:
@@ -32,6 +42,17 @@ class Settings(BaseSettings):
             if cleaned:
                 origins.append(cleaned)
         return origins
+
+    @property
+    def storage_enabled(self) -> bool:
+        return bool(
+            self.STORAGE_PROVIDER
+            and self.SUPABASE_PROJECT_ID
+            and self.SUPABASE_STORAGE_BUCKET
+            and self.SUPABASE_S3_ENDPOINT
+            and self.AWS_ACCESS_KEY_ID
+            and self.AWS_SECRET_ACCESS_KEY
+        )
 
 
 settings = Settings()

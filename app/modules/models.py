@@ -188,7 +188,16 @@ class Lesson(Base):
     title = Column(String, nullable=False)
     duration = Column(String, nullable=False)  # e.g. "10 min"
     type = Column(String, nullable=False)  # video | document | interactive
+    description = Column(Text, nullable=True)
     image = Column(String, nullable=True)
+    thumbnail_url = Column(String(length=1024), nullable=True)
+    thumbnail_path = Column(String(length=1024), nullable=True)
+    content_mode = Column(String(length=32), nullable=False, default="upload")
+    content_url = Column(String(length=1024), nullable=True)
+    content_path = Column(String(length=1024), nullable=True)
+    content_mime_type = Column(String(length=255), nullable=True)
+    content_size_bytes = Column(Integer, nullable=True)
+    external_url = Column(String(length=1024), nullable=True)
     display_order = Column(Integer, default=1)
 
     module = relationship("Module", back_populates="lessons")
